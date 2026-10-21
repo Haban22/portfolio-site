@@ -29,6 +29,21 @@ const experience = defineCollection({
     })
 });
 
+const education = defineCollection({
+    loader: glob({
+        pattern: "**/*.md",
+        base: "./src/content/education"
+    }),
+    schema: z.object({
+        title: z.string(),
+        logo: z.string().optional(),
+        description: z.string(),
+        startDate: z.coerce.date(),
+        endDate: z.coerce.date().optional(),
+        current: z.boolean().optional().default(false),
+    })
+});
+
 const projects = defineCollection({
     loader: glob({
         pattern: "**/*.md",
@@ -62,10 +77,14 @@ const site = defineCollection({
                 title: z.string(),
                 viewAllText: z.string(),
             }),
+            education: z.object({
+                title: z.string(),
+                viewAllText: z.string().optional(),
+            }).optional(),
         }),
         socialLinks: z.array(z.object({
             platform: z.string(),
-            url: z.string().url(),
+            url: z.string(),
         })).optional(),
     })
 });
@@ -100,11 +119,24 @@ const bookmarks = defineCollection({
     })
 });
 
+const skills = defineCollection({
+    loader: glob({
+        pattern: "**/*.md",
+        base: "./src/content/skills"
+    }),
+    schema: z.object({
+        title: z.string().optional(),
+        skills: z.array(z.string()).optional(),
+    })
+});
+
 export const collections = {
+    skills,
     blog,
     experience,
+    education,
     projects,
     site,
     notes,
     bookmarks,
-}; 
+};

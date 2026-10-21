@@ -1,11 +1,11 @@
 {
   "home": {
-    "name": "ByteKai",
-    "title": "Software Engineer & Curious Tinkerer",
+    "name": "Alhassan Tameem Elwy Ali Amer",
+    "title": "Software Developer",
     "introduction": "I’m constantly learning and evolving. I love diving into new ideas and finding creative ways to solve problems.",
     "sections": {
       "blog": {
-        "title": "Writing",
+        "title": "Blog",
         "viewAllText": "View all posts"
       },
       "projects": {
@@ -15,16 +15,27 @@
       "experience": {
         "title": "Experience",
         "viewAllText": "View full résumé"
+      },
+      "education": {
+        "title": "Education"
       }
     },
     "socialLinks": [
       {
+        "platform": "LinkedIn",
+        "url": "https://www.linkedin.com/in/alhassantameem/"
+      },
+      {
         "platform": "GitHub",
-        "url": "https://github.com/bytekai"
+        "url": "https://github.com/haban22"
       },
       {
         "platform": "Twitter",
-        "url": "https://x.com/byteekai"
+        "url": "https://twitter.com"
+      },
+      {
+        "platform": "Email",
+        "url": "mailto:alhassantameem22@gmail.com"
       }
     ]
   }

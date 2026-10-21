@@ -4,11 +4,11 @@ export type NavigationItem = {
 };
 
 export const SITE = {
-    name: "ByteKai",
-    title: "Software Engineer & Curious Tinkerer",
+    name: "Haban",
+    title: "Software Developer",
     description: "Personal portfolio and blog",
-    url: "https://bytekai.dev",
-    defaultImage: "/default-og-image.jpg",
+    url: "",
+    defaultImage: "/images/9b31090.png",
 } as const;
 
 export const NAVIGATION: {
