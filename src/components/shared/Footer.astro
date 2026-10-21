@@ -1,0 +1,78 @@
+---
+import Container from "../ui/Container.astro";
+import { getEntry } from "astro:content";
+
+const siteConfig = await getEntry("site", "home");
+const authorName = siteConfig?.data?.name ?? "Alhassan Amer";
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <Container>
+    <div class="footer-divider"></div>
+    <div class="footer-content">
+      <p class="copyright">
+        &copy; {currentYear} {authorName}. All rights reserved.
+      </p>
+      <p class="credits">
+        Powered by <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro</a> | Theme based on <a href="https://github.com/bytekai/minimal-astro-portfolio" target="_blank" rel="noopener noreferrer">minimal-astro-portfolio</a> by <a href="https://github.com/bytekai" target="_blank" rel="noopener noreferrer">ByteKai</a>
+      </p>
+    </div>
+  </Container>
+</footer>
+
+<style>
+  .site-footer {
+    width: 100%;
+    margin-top: 4rem;
+  }
+
+  .footer-divider {
+    width: 100%;
+    height: 1px;
+    background-color: var(--border-color);
+    margin-bottom: 2rem;
+  }
+
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    opacity: 0.8;
+  }
+
+  .copyright,
+  .credits {
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .credits a {
+    color: var(--text-color);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(255, 255, 255, 0.25);
+    transition: color var(--transition-base), text-decoration-color var(--transition-base);
+  }
+
+  .credits a:hover {
+    color: var(--link-color);
+    text-decoration-color: var(--link-color);
+  }
+
+  @media (max-width: 640px) {
+    .site-footer {
+      margin-top: 3rem;
+    }
+
+    .footer-content {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+  }
+</style>
