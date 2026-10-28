@@ -76,7 +76,18 @@ const skills: string[] = skillsEntries.flatMap((entry: CollectionEntry<"skills">
   <Container>
     <section class="hero">
       <h1>{site.name}</h1>
+      <div class="hero-meta">
       <p class="subtitle">{site.title}</p>
+      {site.location && (
+        <span class="location">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+          {site.location}
+        </span>
+      )}
+    </div>
       <p class="introduction">{site.introduction}</p>
       {
         site.socialLinks && (
@@ -90,7 +101,7 @@ const skills: string[] = skillsEntries.flatMap((entry: CollectionEntry<"skills">
               if (isEmail) {
                 return (
                   <div class="email-wrapper">
-                    <a href={href} class="email-link" title={`Send email to ${rawEmail}`}>
+                    <a href={"https://mail.google.com/mail/?view=cm&to=${rawEmail}"}  target="_blank" rel="noopener noreferrer" class="email-link" title={`Send email to ${rawEmail}`}>
                       <SocialIcon platform="email" />
                       <span>{rawEmail || "Email"}</span>
                     </a>
@@ -131,7 +142,7 @@ const skills: string[] = skillsEntries.flatMap((entry: CollectionEntry<"skills">
     <section class="section">
       <div class="section-header">
         <h2>{site.sections.experience.title}</h2>
-        <a href="/experience">{site.sections.experience.viewAllText}</a>
+        <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">{site.sections.experience.viewAllText}</a>
       </div>
       <div class="content-list">
         {
@@ -210,7 +221,7 @@ const skills: string[] = skillsEntries.flatMap((entry: CollectionEntry<"skills">
 
     <section class="section">
       <div class="section-header">
-        <h2>Skills</h2>
+        <h2>{site.sections.skills.title}</h2>
       </div>
       <div class="skills-grid">
         {
@@ -258,6 +269,36 @@ const skills: string[] = skillsEntries.flatMap((entry: CollectionEntry<"skills">
 
   .hero {
     padding: 4rem 0;
+  }
+  
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .hero-meta .subtitle {
+    margin: 0;
+  }
+
+  .location {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: var(--text-lg);
+    opacity: 0.6;
+  }
+
+  .location svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  .location::before {
+  content: "·";
+  margin-right: 0.5rem;
   }
 
   .introduction {

@@ -52,9 +52,14 @@ const projects = defineCollection({
     schema: z.object({
         title: z.string(),
         description: z.string(),
-        url: z.string().url(),
+        url: z.string().url().optional(),
+        github: z.string().url().optional(),
+        download: z.string().url().optional(),
         featured: z.boolean().optional().default(false),
         techs: z.array(z.string()).optional(),
+        category: z.string().optional(),
+        publishedAt: z.coerce.date().optional(),
+        draft: z.boolean().optional().default(false),
     })
 });
 
@@ -64,6 +69,7 @@ const site = defineCollection({
         name: z.string(),
         title: z.string(),
         introduction: z.string(),
+        location: z.string().optional(),
         sections: z.object({
             blog: z.object({
                 title: z.string(),
@@ -74,6 +80,10 @@ const site = defineCollection({
                 viewAllText: z.string(),
             }),
             experience: z.object({
+                title: z.string(),
+                viewAllText: z.string(),
+            }),
+            skills: z.object({
                 title: z.string(),
                 viewAllText: z.string(),
             }),

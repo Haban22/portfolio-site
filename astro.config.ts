@@ -4,4 +4,7 @@ export default defineConfig({
   output: "static",
   prefetch: true,
   compressHTML: true,
+  redirects: {
+    '/notes': '/projects',
+  },
 });

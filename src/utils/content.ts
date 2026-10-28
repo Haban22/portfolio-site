@@ -1,11 +1,15 @@
 import type { CollectionEntry } from 'astro:content';
 
-export type ContentItem = CollectionEntry<'blog'> | CollectionEntry<'notes'> | CollectionEntry<'bookmarks'>;
+export type ContentItem =
+    | CollectionEntry<'blog'>
+    | CollectionEntry<'notes'>
+    | CollectionEntry<'bookmarks'>
+    | CollectionEntry<'projects'>;
 
 export function sortContentByDate(content: ContentItem[]): ContentItem[] {
     return content.sort((a, b) => {
-        const dateA = 'publishedAt' in a.data ? a.data.publishedAt : new Date();
-        const dateB = 'publishedAt' in b.data ? b.data.publishedAt : new Date();
+        const dateA = 'publishedAt' in a.data && a.data.publishedAt ? a.data.publishedAt : new Date();
+        const dateB = 'publishedAt' in b.data && b.data.publishedAt ? b.data.publishedAt : new Date();
         return dateB.getTime() - dateA.getTime();
     });
 }
@@ -17,4 +21,4 @@ export function filterDrafts(content: ContentItem[]): ContentItem[] {
         }
         return true;
     });
-} 
+}

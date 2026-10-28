@@ -5,15 +5,21 @@ interface Props {
   url: string;
   date?: Date;
   tags?: string[];
+  target?: string;
+  rel?: string;
 }
 
-const { title, description, url, date, tags } = Astro.props;
+const { title, description, url, date, tags, target, rel } = Astro.props;
 import { formatDate } from "../../utils/date";
+
+const isExternal = url.startsWith("http://") || url.startsWith("https://");
+const linkTarget = target ?? (isExternal ? "_blank" : undefined);
+const linkRel = rel ?? (isExternal ? "noopener noreferrer" : undefined);
 ---
 
 <article>
   <div class="title-row">
-    <a href={url}>{title}</a>
+    <a href={url} target={linkTarget} rel={linkRel}>{title}</a>
     {date && <time datetime={date.toISOString()}>{formatDate(date)}</time>}
   </div>
   <p class="muted-text">{description}</p>

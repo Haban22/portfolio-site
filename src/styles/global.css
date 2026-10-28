@@ -76,7 +76,7 @@ main {
   margin: 0 auto;
   padding: 2rem 0;
   position: relative;
-  overflow-x: hidden;
+  overflow-x: clip;   /* was: hidden */
 }
 
 .nav-container {

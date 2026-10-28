@@ -17,7 +17,7 @@ export const NAVIGATION: {
     main: [
         { name: "Home", path: "/" },
         { name: "Blog", path: "/blog" },
-        { name: "Notes", path: "/notes" },
+        { name: "Projects", path: "/projects" },
         { name: "Bookmarks", path: "/bookmarks" }
     ],
 } as const;
@@ -36,4 +36,4 @@ export const META = {
     twitter: {
         cardType: "summary_large_image",
     }
-} as const; 
+} as const;

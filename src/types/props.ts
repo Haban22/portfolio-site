@@ -19,6 +19,8 @@ export interface ArticleCardProps {
     url: string;
     date?: Date;
     tags?: string[];
+    target?: string;
+    rel?: string;
 }
 
 export interface SectionProps {
@@ -30,4 +32,4 @@ export interface SectionProps {
 export interface ContainerProps {
     className?: string;
     as?: keyof HTMLElementTagNameMap;
-} 
+}

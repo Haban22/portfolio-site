@@ -2,7 +2,8 @@
   "home": {
     "name": "Alhassan Tameem Elwy Ali Amer",
     "title": "Software Developer",
-    "introduction": "I’m constantly learning and evolving. I love diving into new ideas and finding creative ways to solve problems.",
+    "location": "Egypt",
+    "introduction": "Software Engineering graduate with a broad foundation across backend systems, algorithms, and full-stack development built through both coursework and hands-on projects. I enjoy taking a system from architecture to working implementation.",
     "sections": {
       "blog": {
         "title": "Blog",
@@ -16,6 +17,10 @@
         "title": "Experience",
         "viewAllText": "View full résumé"
       },
+      "skills": {
+        "title": "Skills",
+        "viewAllText": "View all skills"
+      },
       "education": {
         "title": "Education"
       }
@@ -28,10 +33,6 @@
       {
         "platform": "GitHub",
         "url": "https://github.com/haban22"
-      },
-      {
-        "platform": "Twitter",
-        "url": "https://twitter.com"
       },
       {
         "platform": "Email",
