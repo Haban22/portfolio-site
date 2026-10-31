@@ -262,7 +262,7 @@ pre {
 }
 
 pre {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--hover-bg);
   border-radius: 0.5rem;
   padding: 1rem;
   margin: 1.5rem 0;
@@ -270,7 +270,7 @@ pre {
 }
 
 code {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--hover-bg);
   padding: 0.2em 0.4em;
   border-radius: 0.25rem;
 }
@@ -413,13 +413,19 @@ hr {
 h1,
 h2,
 h3 {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.95),
-    rgba(255, 255, 255, 0.85) 50%,
-    rgba(255, 255, 255, 0.75) 100%
-  );
+  background: var(--heading-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+[data-theme="light"] body::after {
+  opacity: 0.08;
+  mix-blend-mode: multiply;
+}
+
+[data-theme="light"] body::before,
+[data-theme="light"] .bottom-glow,
+[data-theme="light"] .top-glow {
+  opacity: 0.35;
 }

@@ -8,8 +8,13 @@ export type ContentItem =
 
 export function sortContentByDate(content: ContentItem[]): ContentItem[] {
     return content.sort((a, b) => {
-        const dateA = 'publishedAt' in a.data && a.data.publishedAt ? a.data.publishedAt : new Date();
-        const dateB = 'publishedAt' in b.data && b.data.publishedAt ? b.data.publishedAt : new Date();
+        const getDate = (item: ContentItem) => {
+            if ('date' in item.data && item.data.date) return new Date(item.data.date as any);
+            if ('publishedAt' in item.data && item.data.publishedAt) return new Date(item.data.publishedAt as any);
+            return new Date(0);
+        };
+        const dateA = getDate(a);
+        const dateB = getDate(b);
         return dateB.getTime() - dateA.getTime();
     });
 }

@@ -15,6 +15,7 @@ import robotoMonoRegularWoff2 from "@fontsource/roboto-mono/files/roboto-mono-la
 import { ClientRouter } from "astro:transitions";
 import Navigation from "../shared/Navigation.astro";
 import Footer from "../shared/Footer.astro";
+import ThemeToggle from "../ui/ThemeToggle.astro";
 
 interface Props {
   title: string;
@@ -58,12 +59,23 @@ const { title, description, image = "/default-og-image.jpg", canonicalURL = Astr
     <meta name="generator" content={Astro.generator} />
     <ClientRouter />
     <script is:inline>
-      // Always use dark theme
-      document.documentElement.setAttribute("data-theme", "dark");
+      // Initialize theme from storage or system preference
+      const getInitialTheme = () => {
+        try {
+          const stored = localStorage.getItem("theme");
+          if (stored === "light" || stored === "dark") return stored;
+        } catch (_) {}
+        if (window.matchMedia("(prefers-color-scheme: light)").matches) return "light";
+        return "dark";
+      };
+
+      const initialTheme = getInitialTheme();
+      document.documentElement.setAttribute("data-theme", initialTheme);
 
       // Handle theme persistence during view transitions
       document.addEventListener("astro:before-swap", (ev) => {
-        ev.newDocument.documentElement.setAttribute("data-theme", "dark");
+        const currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
+        ev.newDocument.documentElement.setAttribute("data-theme", currentTheme);
       });
 
       // Add initial-load class
@@ -73,7 +85,7 @@ const { title, description, image = "/default-og-image.jpg", canonicalURL = Astr
         setTimeout(() => {
           document.body.classList.remove("initial-load");
           document.documentElement.classList.add("theme-transition");
-        }, 1000);
+        }, 300);
       });
     </script>
   </head>
@@ -82,6 +94,7 @@ const { title, description, image = "/default-og-image.jpg", canonicalURL = Astr
     <main>
       <div class="nav-container">
         <Navigation />
+        <ThemeToggle />
       </div>
       <main><slot /></main>
       <Footer />
