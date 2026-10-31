@@ -1,0 +1,67 @@
+---
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import BaseLayout from "../../components/layout/BaseLayout.astro";
+import BaseHero from "../../components/shared/BaseHero.astro";
+import Container from "../../components/ui/Container.astro";
+import ProjectCard from "../../components/ui/ProjectCard.astro";
+import GithubActivity from "../../components/ui/GithubActivity.astro";
+
+type Project = CollectionEntry<"projects">;
+
+const projects = await getCollection("projects", ({ data }) => {
+  return import.meta.env.PROD ? !data.draft : true;
+});
+
+const getProjectTime = (project: Project) => {
+  const d = project.data.date ?? project.data.publishedAt;
+  return d ? new Date(d).getTime() : 0;
+};
+
+const sortedProjects = [...projects].sort((a: Project, b: Project) => {
+  const dateA = getProjectTime(a);
+  const dateB = getProjectTime(b);
+  if (dateA !== dateB) return dateB - dateA;
+  return a.data.title.localeCompare(b.data.title);
+});
+
+// Build the links object, leaving out anything the project doesn't have
+const getLinks = (data: Project["data"]) => ({
+  ...(data.url && { live: data.url }),
+  ...(data.github && { github: data.github }),
+  ...(data.download && { download: data.download }),
+});
+---
+
+<BaseLayout title="Projects" description="">
+  <Container>
+    <BaseHero title="Projects" description=""/>
+    <GithubActivity username="Haban22" />
+
+    <h2 class="text-lg font-semibold mb-4">My Projects</h2>
+    <div class="grid">
+      {
+        sortedProjects.map((project: Project) => (
+          <ProjectCard
+            title={project.data.title}
+            description={project.data.description}
+            links={getLinks(project.data)}
+          />
+        ))
+      }
+    </div>
+  </Container>
+</BaseLayout>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  @media (max-width: 640px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

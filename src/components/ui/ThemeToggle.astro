@@ -1,0 +1,113 @@
+---
+---
+
+<button
+  type="button"
+  class="theme-toggle"
+  aria-label="Toggle theme"
+  title="Toggle theme"
+>
+  <svg
+    class="sun-icon"
+    viewBox="0 0 24 24"
+    width="16"
+    height="16"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <circle cx="12" cy="12" r="5"></circle>
+    <line x1="12" y1="1" x2="12" y2="3"></line>
+    <line x1="12" y1="21" x2="12" y2="23"></line>
+    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+    <line x1="1" y1="12" x2="3" y2="12"></line>
+    <line x1="21" y1="12" x2="23" y2="12"></line>
+    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+  </svg>
+  <svg
+    class="moon-icon"
+    viewBox="0 0 24 24"
+    width="16"
+    height="16"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+  </svg>
+</button>
+
+<style>
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    margin: 0;
+    border-radius: 50%;
+    background: var(--hover-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color var(--transition-base), border-color var(--transition-base), background-color var(--transition-base), transform var(--transition-base);
+  }
+
+  .theme-toggle:hover {
+    color: var(--text-color);
+    border-color: var(--text-muted);
+    transform: scale(1.05);
+  }
+
+  .theme-toggle:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--link-color);
+  }
+
+  .sun-icon {
+    display: block;
+  }
+
+  .moon-icon {
+    display: none;
+  }
+
+  :global([data-theme="light"]) .sun-icon {
+    display: none;
+  }
+
+  :global([data-theme="light"]) .moon-icon {
+    display: block;
+  }
+</style>
+
+<script>
+  function setupThemeToggle() {
+    const buttons = document.querySelectorAll(".theme-toggle");
+    buttons.forEach((btn) => {
+      if ((btn as any).__themeBound) return;
+      (btn as any).__themeBound = true;
+
+      btn.addEventListener("click", () => {
+        const isLight = document.documentElement.getAttribute("data-theme") === "light";
+        const nextTheme = isLight ? "dark" : "light";
+        document.documentElement.setAttribute("data-theme", nextTheme);
+        try {
+          localStorage.setItem("theme", nextTheme);
+        } catch (_) {}
+      });
+    });
+  }
+
+  setupThemeToggle();
+  document.addEventListener("astro:page-load", setupThemeToggle);
+</script>
