@@ -1,0 +1,85 @@
+---
+import BaseLayout from "../../components/layout/BaseLayout.astro";
+import Categories from "../../components/shared/Categories.astro";
+import ArticleCard from "../../components/ui/ArticleCard.astro";
+import FriendCard from "../../components/ui/FriendCard.astro";
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import BaseHero from "../../components/shared/BaseHero.astro";
+import Container from "../../components/ui/Container.astro";
+import ContentList from "../../components/shared/ContentList.astro";
+type Link = CollectionEntry<"links">;
+type Friend = CollectionEntry<"friends">;
+
+const links = await getCollection("links");
+const types = [...new Set(links.map((link: Link) => link.data.type))];
+const sortedLinks = links.sort(
+  (a: Link, b: Link) => b.data.createdAt.getTime() - a.data.createdAt.getTime()
+);
+
+const friends = (await getCollection("friends")).sort((a: Friend, b: Friend) =>
+  a.data.title.localeCompare(b.data.title)
+);
+---
+
+<BaseLayout title="Links" description="My collection of interesting reads and resources">
+  <Container>
+    <BaseHero title="Links" description="My collection of interesting reads and resources" />
+
+    <Categories plural categories={types} currentPath={Astro.url.pathname} basePath="links" />
+
+    <ContentList>
+      {
+        sortedLinks.map((link) => (
+          <ArticleCard
+            title={link.data.title}
+            description={link.data.description}
+            url={link.data.url}
+            date={link.data.createdAt}
+            tags={[link.data.type, `by ${link.data.author}`]}
+          />
+        ))
+      }
+    </ContentList>
+
+    {
+      friends.length > 0 && (
+        <section class="friends">
+          <h2>Check out some of my friends</h2>
+          <div class="friends-grid">
+            {friends.map((friend: Friend) => (
+              <FriendCard
+                title={friend.data.title}
+                description={friend.data.description}
+                url={friend.data.url}
+                avatar={friend.data.avatar}
+              />
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </Container>
+</BaseLayout>
+
+<style>
+  .friends {
+    margin: 4rem 0 2rem;
+  }
+
+  .friends h2 {
+    margin-bottom: 1.5rem;
+  }
+
+  .friends-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  @media (max-width: 480px) {
+    .friends-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

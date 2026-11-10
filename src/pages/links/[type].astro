@@ -1,0 +1,54 @@
+---
+import BaseLayout from "../../components/layout/BaseLayout.astro";
+import ArticleCard from "../../components/ui/ArticleCard.astro";
+import { getCollection } from "astro:content";
+import type { GetStaticPaths, InferGetStaticParamsType } from "astro";
+import type { CollectionEntry } from "astro:content";
+import Categories from "../../components/shared/Categories.astro";
+import BaseHero from "../../components/shared/BaseHero.astro";
+import Container from "../../components/ui/Container.astro";
+import ContentList from "../../components/shared/ContentList.astro";
+type Link = CollectionEntry<"links">;
+
+export const getStaticPaths = (async () => {
+  const links = await getCollection("links");
+  const allTypes = [...new Set(links.map((link: Link) => link.data.type))];
+
+  return allTypes.map((typePath) => {
+    const typeLinks = links.filter((link: Link) => link.data.type === typePath);
+
+    return {
+      params: { type: typePath },
+      props: { typeLinks, allTypes },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const { typeLinks, allTypes } = Astro.props;
+
+const sortedLinks = typeLinks.sort(
+  (a: Link, b: Link) => b.data.createdAt.getTime() - a.data.createdAt.getTime()
+);
+---
+
+<BaseLayout title="Links" description="My collection of interesting reads and resources">
+  <Container>
+    <BaseHero title="Links" description="My collection of interesting reads and resources" />
+
+    <Categories plural categories={allTypes} currentPath={Astro.url.pathname} basePath="links" />
+
+    <ContentList>
+      {
+        sortedLinks.map((link: Link) => (
+          <ArticleCard
+            title={link.data.title}
+            description={link.data.description}
+            url={link.data.url}
+            date={link.data.createdAt}
+            tags={[link.data.type, `by ${link.data.author}`]}
+          />
+        ))
+      }
+    </ContentList>
+  </Container>
+</BaseLayout>

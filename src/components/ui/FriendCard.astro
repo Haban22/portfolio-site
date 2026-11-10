@@ -1,0 +1,92 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  url: string;
+  avatar?: string;
+}
+
+const { title, description, url, avatar } = Astro.props;
+---
+
+<a class="friend-card" href={url} target="_blank" rel="noopener noreferrer">
+  {avatar && <img class="bg" src={avatar} alt="" aria-hidden="true" />}
+  {avatar && <img class="avatar" src={avatar} alt={title} />}
+  <div class="info">
+    <span class="name">{title}</span>
+    <span class="role">{description}</span>
+  </div>
+</a>
+
+<style>
+  .friend-card {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 1rem;
+    background: var(--hover-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    color: var(--text-color);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .friend-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--text-muted);
+  }
+
+  /* Hide the global animated link underline */
+  .friend-card::after {
+    display: none;
+  }
+
+  /* Faint blurred copy of the photo behind the card */
+  .bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+    filter: blur(24px);
+    opacity: 0.18;
+    transform: scale(1.3);
+    pointer-events: none;
+  }
+
+  .avatar {
+    position: relative;
+    flex: 0 0 auto;
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .info {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+  }
+
+  .name {
+    font-size: var(--text-sm);
+    font-weight: 500;
+  }
+
+  .role {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>
