@@ -18,7 +18,7 @@ export const NAVIGATION: {
         { name: "Home", path: "/" },
         { name: "Blog", path: "/blog" },
         { name: "Projects", path: "/projects" },
-        { name: "Bookmarks", path: "/bookmarks" }
+        { name: "Links", path: "/links" }
     ],
 } as const;
 

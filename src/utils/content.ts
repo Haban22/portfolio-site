@@ -3,7 +3,7 @@ import type { CollectionEntry } from 'astro:content';
 export type ContentItem =
     | CollectionEntry<'blog'>
     | CollectionEntry<'notes'>
-    | CollectionEntry<'bookmarks'>
+    | CollectionEntry<'links'>
     | CollectionEntry<'projects'>;
 
 export function sortContentByDate(content: ContentItem[]): ContentItem[] {

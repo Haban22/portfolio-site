@@ -114,10 +114,10 @@ const notes = defineCollection({
     })
 });
 
-const bookmarks = defineCollection({
+const links = defineCollection({
     loader: glob({
         pattern: "**/*.md",
-        base: "./src/content/bookmarks"
+        base: "./src/content/links"
     }),
     schema: z.object({
         title: z.string(),
@@ -128,6 +128,16 @@ const bookmarks = defineCollection({
         createdAt: z.coerce.date(),
         description: z.string().optional(),
     })
+});
+
+const friends = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/friends" }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    url: z.string().url(),
+    avatar: z.string().optional(),
+  }),
 });
 
 const skills = defineCollection({
@@ -149,5 +159,6 @@ export const collections = {
     projects,
     site,
     notes,
-    bookmarks,
+    links,
+    friends,
 };
